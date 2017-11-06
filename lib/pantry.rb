@@ -23,8 +23,11 @@ class Pantry
   end
 
   def print_shopping_list
-    shopping_list.reduce("") do |result, (ingredient, amount)|
-      
+    full_list = shopping_list.reduce("") do |result, (ingredient, amount)|
+      puts "* #{ingredient}: #{amount}"
+      result += "* #{ingredient}: #{amount}\n"
+    end
+    full_list.chomp
   end
 
 
