@@ -66,24 +66,19 @@ class Pantry
   def how_many_can_i_make
     recipes_can_make.reduce(Hash.new(0)) do |result, recipe|
       recipe_count = []
-      binding.pry
       recipe.ingredients.each do |ingredient, amount|
         ingredient_count = 0
+        starting_amount = amount
         until stock[ingredient] < amount
-          binding.pry
-          amount += amount
+          amount += starting_amount
           ingredient_count += 1
         end
         recipe_count << ingredient_count
-        binding.pry
       end
       result[recipe.name] += recipe_count.min
+      recipe_count = []
       result
-      binding.pry
     end
   end
-
-  #until make_more == false
-
 
 end
