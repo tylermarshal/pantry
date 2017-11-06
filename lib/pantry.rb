@@ -65,20 +65,25 @@ class Pantry
 
   def how_many_can_i_make
     recipes_can_make.reduce(Hash.new(0)) do |result, recipe|
-      recipe_count = []
-      recipe.ingredients.each do |ingredient, amount|
-        ingredient_count = 0
-        starting_amount = amount
-        until stock[ingredient] < amount
-          amount += starting_amount
-          ingredient_count += 1
-        end
-        recipe_count << ingredient_count
-      end
-      result[recipe.name] += recipe_count.min
-      recipe_count = []
+      result[recipe.name] += amount_per_recipe(recipe)
       result
     end
+  end
+
+  def amount_per_recipe(recipe)
+    recipe.ingredients.map do |ingredient, amount|
+      times_per_ingredient(ingredient, amount)
+    end.min
+  end
+
+  def times_per_ingredient(ingredient, amount)
+    ingredient_count = 0
+    starting_amount = amount
+    until stock[ingredient] < amount
+      amount += starting_amount
+      ingredient_count += 1
+    end
+    ingredient_count
   end
 
 end

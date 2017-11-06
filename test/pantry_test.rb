@@ -141,7 +141,40 @@ class PantryTest < Minitest::Test
     pantry.restock("Raw nuts", 20)
     pantry.restock("Salt", 20)
 
+    assert_equal true, pantry.check_if_has_single_ingredient("Raw nuts", 10)
+    assert_equal false, pantry.check_if_has_single_ingredient("Cheese", 20)
+    assert_equal false, pantry.check_each_ingredient(r1)
+    assert_equal true, pantry.check_each_ingredient(r2)
+    assert_equal [r2,r3], pantry.recipes_can_make
     assert_equal ["Pickles", "Peanuts"], pantry.what_can_i_make
+  end
+
+  def test_it_can_determine_how_many_i_can_make
+    pantry = Pantry.new
+
+    r1 = Recipe.new("Cheese Pizza")
+    r1.add_ingredient("Cheese", 20)
+    r1.add_ingredient("Flour", 20)
+
+    r2 = Recipe.new("Pickles")
+    r2.add_ingredient("Brine", 10)
+    r2.add_ingredient("Cucumbers", 30)
+
+    r3 = Recipe.new("Peanuts")
+    r3.add_ingredient("Raw nuts", 10)
+    r3.add_ingredient("Salt", 10)
+
+    pantry.add_to_cookbook(r1)
+    pantry.add_to_cookbook(r2)
+    pantry.add_to_cookbook(r3)
+
+    pantry.restock("Cheese", 10)
+    pantry.restock("Flour", 20)
+    pantry.restock("Brine", 40)
+    pantry.restock("Cucumbers", 120)
+    pantry.restock("Raw nuts", 20)
+    pantry.restock("Salt", 20)
+
     assert_equal ({"Pickles" => 4, "Peanuts" => 2}), pantry.how_many_can_i_make
   end
 end
