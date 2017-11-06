@@ -1,3 +1,5 @@
+require 'pry'
+
 class Pantry
 
   attr_reader :stock, :shopping_list, :cookbook
@@ -38,13 +40,24 @@ class Pantry
   def what_can_i_make
     cookbook.map do |recipe|
       make_recipe = true
-      if recipe.ingredients.each_pair do |ingredient, amount|
+      recipe.ingredients.each do |ingredient, amount|
         if stock[ingredient] > amount
-          true
+          make_recipe = true
+        else
+          make_recipe = false
+        end
+      end
+      recipe.name if make_recipe == true
+    end.compact
   end
 
-  #if stock has an ingredient amount that is
-  #greater than the ingredient amount for each recipe
+  def check_if_has_ingredient
+    if stock[ingredient] > amount
+      make_recipe = true
+    else
+      make_recipe = false
+    end
+  end
 
 
 end
