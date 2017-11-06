@@ -1,10 +1,11 @@
 class Pantry
 
-  attr_reader :stock, :shopping_list
+  attr_reader :stock, :shopping_list, :cookbook
 
   def initialize
     @stock = Hash.new(0)
     @shopping_list = Hash.new(0)
+    @cookbook= []
   end
 
   def stock_check(ingredient)
@@ -29,6 +30,21 @@ class Pantry
     end
     full_list.chomp
   end
+
+  def add_to_cookbook(recipe)
+    cookbook << recipe
+  end
+
+  def what_can_i_make
+    cookbook.map do |recipe|
+      make_recipe = true
+      if recipe.ingredients.each_pair do |ingredient, amount|
+        if stock[ingredient] > amount
+          true
+  end
+
+  #if stock has an ingredient amount that is
+  #greater than the ingredient amount for each recipe
 
 
 end
