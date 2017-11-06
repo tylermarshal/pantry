@@ -2,6 +2,7 @@ require './lib/pantry'
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/recipe'
+require 'pry'
 
 class PantryTest < Minitest::Test
 
@@ -56,6 +57,38 @@ class PantryTest < Minitest::Test
     pantry.add_to_shopping_list(r)
 
     assert_equal ({"Cheese" => 20, "Flour" => 20}), pantry.shopping_list
+  end
+
+  def test_it_can_add_ingredients_from_two_recipes_to_the_shopping_list
+    pantry = Pantry.new
+    r = Recipe.new("Cheese Pizza")
+    r.add_ingredient("Cheese", 20)
+    r.add_ingredient("Flour", 20)
+    pantry.add_to_shopping_list(r)
+    r2 = Recipe.new("Spaghetti")
+    r2.add_ingredient("Spaghetti Noodles", 10)
+    r2.add_ingredient("Marinara Sauce", 10)
+    r2.add_ingredient("Cheese", 5)
+    pantry.add_to_shopping_list(r2)
+    result = {"Cheese" => 25, "Flour" => 20,
+              "Spaghetti Noodles" => 10, "Marinara Sauce" => 10}
+
+    assert_equal result ,pantry.shopping_list
+  end
+
+  def test_it_prints_shoping_list
+    pantry = Pantry.new
+    r = Recipe.new("Cheese Pizza")
+    r.add_ingredient("Cheese", 20)
+    r.add_ingredient("Flour", 20)
+    pantry.add_to_shopping_list(r)
+    r2 = Recipe.new("Spaghetti")
+    r2.add_ingredient("Spaghetti Noodles", 10)
+    r2.add_ingredient("Marinara Sauce", 10)
+    r2.add_ingredient("Cheese", 5)
+    pantry.add_to_shopping_list(r2)
+
+    
   end
 
 end

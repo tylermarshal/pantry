@@ -16,8 +16,16 @@ class Pantry
   end
 
   def add_to_shopping_list(recipe)
-    recipe.ingredients.reduce({}) do |result, (ingredient, amount)|
-      shopping_list += result[ingredient] =>
+    @shopping_list = recipe.ingredients.reduce(shopping_list) do |result, (ingredient, amount)|
+      result[ingredient] += amount
+      result
+    end
+  end
+
+  def print_shopping_list
+    shopping_list.reduce("") do |result, (ingredient, amount)|
+      
+  end
 
 
 end
