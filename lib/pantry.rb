@@ -72,11 +72,11 @@ class Pantry
 
   def amount_per_recipe(recipe)
     recipe.ingredients.map do |ingredient, amount|
-      times_per_ingredient(ingredient, amount)
+      amount_per_ingredient(ingredient, amount)
     end.min
   end
 
-  def times_per_ingredient(ingredient, amount)
+  def amount_per_ingredient(ingredient, amount)
     ingredient_count = 0
     starting_amount = amount
     until stock[ingredient] < amount

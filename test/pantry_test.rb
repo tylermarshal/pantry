@@ -175,6 +175,10 @@ class PantryTest < Minitest::Test
     pantry.restock("Raw nuts", 20)
     pantry.restock("Salt", 20)
 
+    assert_equal 2, pantry.amount_per_ingredient("Salt", 10)
+    assert_equal 0, pantry.amount_per_ingredient("Cheese", 20)
+    assert_equal 0, pantry.amount_per_recipe(r1)
+    assert_equal 4, pantry.amount_per_recipe(r2)
     assert_equal ({"Pickles" => 4, "Peanuts" => 2}), pantry.how_many_can_i_make
   end
 end
